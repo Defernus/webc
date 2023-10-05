@@ -13,6 +13,8 @@ mod lexer;
 
 #[derive(Error, Debug, Clone, Serialize, PartialEq, Eq)]
 pub enum WebcError {
+    #[error("Failed to parse config: {0}")]
+    ConfigParsing(String),
     #[error("Failed to parse tokens: {0}")]
     LexerError(#[from] LexerError),
     #[error("Failed to parse AST: {0}")]
@@ -23,4 +25,4 @@ pub enum WebcError {
     CompilerError(#[from] CompilerError),
 }
 
-pub type WebcResult<T> = Result<T, LexerError>;
+pub type WebcResult<T> = Result<T, WebcError>;

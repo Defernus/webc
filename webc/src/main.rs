@@ -1,7 +1,7 @@
-use webc::config::Config;
+use webc::config::WebcConfig;
 
 pub fn main() {
-    let cfg = Config::init();
+    let cfg = WebcConfig::init();
 
     println!("cfg {:?}", cfg);
 

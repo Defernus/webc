@@ -1,14 +1,14 @@
 use envconfig::Envconfig;
 
 #[derive(Envconfig, Debug)]
-pub struct Config {}
+pub struct WebcConfig {}
 
-impl Config {
+impl WebcConfig {
     pub fn init() -> Self {
         if dotenvy::dotenv().is_ok() {
             println!("Loaded .env file");
         }
 
-        Self::init_from_env().expect("Config init failed")
+        Self::init_from_env().expect("WebcConfig init failed")
     }
 }

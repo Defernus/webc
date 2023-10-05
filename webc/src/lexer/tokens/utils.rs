@@ -1,6 +1,6 @@
 use logos::Lexer;
 
-use crate::WebcToken;
+use super::WebcToken;
 
 /// Consumes a single character from the lexer and extends the span (token size) by it.
 ///

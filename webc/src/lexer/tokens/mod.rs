@@ -1,3 +1,19 @@
+use logos::Logos;
+use serde::Serialize;
+
+use crate::LexerError;
+pub use assign::*;
+pub use binary_operator::*;
+use comment::{parse_multiline_comment, parse_singleline_comment};
+pub use compare_operator::*;
+pub use keyword::*;
+pub use literal::*;
+pub use punctuator::*;
+pub use type_keyword::*;
+pub use unary_operator::*;
+
+use super::source::{WebcSourceMeta, WebcSourcePosition};
+
 mod assign;
 mod binary_operator;
 mod comment;
@@ -9,21 +25,7 @@ mod type_keyword;
 mod unary_operator;
 mod utils;
 
-use crate::{tokens::Punctuator, LexerError};
-use logos::Logos;
-
-pub use assign::*;
-pub use binary_operator::*;
-pub use compare_operator::*;
-pub use keyword::*;
-pub use literal::*;
-pub use punctuator::*;
-pub use type_keyword::*;
-pub use unary_operator::*;
-
-use comment::{parse_multiline_comment, parse_singleline_comment};
-
-#[derive(Logos, Debug, PartialEq, Clone)]
+#[derive(Logos, Debug, PartialEq, Clone, Serialize, Eq, PartialOrd, Ord)]
 #[logos(error = LexerError)]
 #[logos(skip r"[ \t\r\n]+")]
 pub enum WebcToken {
@@ -133,4 +135,30 @@ pub enum WebcToken {
 
     /// End of source
     Eos,
+}
+
+#[derive(Debug, PartialEq, Eq, Ord, Clone, Serialize, PartialOrd)]
+pub struct TokenData {
+    token: WebcToken,
+    start: WebcSourcePosition,
+    end: WebcSourcePosition,
+}
+
+impl TokenData {
+    pub fn new(token: WebcToken, start: WebcSourcePosition, end: WebcSourcePosition) -> TokenData {
+        TokenData { token, start, end }
+    }
+
+    /// Returns token
+    pub fn token(&self) -> &WebcToken {
+        &self.token
+    }
+
+    pub fn start(&self) -> WebcSourcePosition {
+        self.start
+    }
+
+    pub fn end(&self) -> WebcSourcePosition {
+        self.end
+    }
 }

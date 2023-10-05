@@ -9,5 +9,8 @@ keywords = { workspace = true }
 
 
 [dependencies]
+thiserror = { workspace = true }
 envconfig = { workspace = true }
 dotenvy = { workspace = true }
+logos = { workspace = true }
+serde = { workspace = true }

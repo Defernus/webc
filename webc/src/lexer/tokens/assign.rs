@@ -1,4 +1,6 @@
-#[derive(Debug, PartialEq, Clone)]
+use serde::Serialize;
+
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Clone, Copy, Serialize)]
 pub enum Assign {
     /// =
     Assign,

@@ -1,4 +1,6 @@
-#[derive(Debug, PartialEq, Clone)]
+use serde::Serialize;
+
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Clone, Serialize)]
 pub enum Keyword {
     /// default
     Default,

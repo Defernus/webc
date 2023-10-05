@@ -1,5 +1,5 @@
 [workspace]
-members = ["lexer", "common", "webc", "tests"]
+members = ["webc", "tests"]
 resolver = "2"
 
 [workspace.package]
@@ -20,8 +20,6 @@ logos = "0.13.0"
 
 # project packages
 webc = { version = "0.1.0", path = "./webc" }
-webc-lexer = { version = "0.1.0", path = "./lexer" }
-webc-common = { version = "0.1.0", path = "./common" }
 tests = { version = "0.1.0", path = "./tests" }
 
 [profile.release]

@@ -1,8 +1,11 @@
 use logos::Lexer;
+use serde::Serialize;
 
-use crate::{LexerError, LexerResult, WebcToken};
+use crate::{LexerError, LexerResult};
 
-#[derive(Debug, PartialEq, Clone)]
+use super::WebcToken;
+
+#[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Clone, Serialize)]
 pub enum TypeKeyword {
     /// uintN
     UIntM(u32),

@@ -1,8 +1,11 @@
 use logos::Lexer;
 
-use crate::{LexerError, LexerResult, WebcToken};
+use crate::{LexerError, LexerResult};
 
-use super::utils::{consume_char, is_new_line, next_char};
+use super::{
+    utils::{consume_char, is_new_line, next_char},
+    WebcToken,
+};
 
 pub fn parse_multiline_comment(lex: &mut Lexer<WebcToken>) -> LexerResult<()> {
     while let Some(ch) = consume_char(lex) {

@@ -1,9 +1,9 @@
 use serde::Serialize;
 use thiserror::Error;
 
-use crate::lexer::{
-    source::{WebcSourceMeta, WebcSourcePosition},
-    tokens::TokenData,
+use crate::{
+    ast::node::AstNodeData,
+    lexer::{source::position::WebcSourcePosition, tokens::TokenData},
 };
 
 #[derive(Error, Debug, Clone, Eq, PartialEq, Serialize)]
@@ -17,13 +17,12 @@ pub type ExpressionResult<T> = Result<T, ExpressionError>;
 #[derive(Debug, Clone, Serialize, Eq, PartialEq)]
 pub struct ExpressionErrorData {
     error: ExpressionError,
-    start: TokenData,
-    end: TokenData,
+    ast_node: AstNodeData,
 }
 
 impl ExpressionErrorData {
-    pub fn new(error: ExpressionError, start: TokenData, end: TokenData) -> Self {
-        ExpressionErrorData { error, start, end }
+    pub fn new(error: ExpressionError, ast_node: AstNodeData) -> Self {
+        ExpressionErrorData { error, ast_node }
     }
 
     pub fn error(&self) -> &ExpressionError {
@@ -32,28 +31,28 @@ impl ExpressionErrorData {
 
     /// The token where the error starts
     pub fn start(&self) -> &TokenData {
-        &self.start
+        &self.ast_node.start()
     }
 
     /// The token where the error ends
     pub fn end(&self) -> &TokenData {
-        &self.end
+        &self.ast_node.end()
     }
 
-    /// Index in the source code where the error starts
+    /// Position in the source code where the error starts
     pub fn start_position(&self) -> WebcSourcePosition {
-        self.start.start()
+        self.ast_node.start_position()
     }
 
-    /// Index in the source code where the error ends
+    /// Position in the source code where the error ends
     pub fn end_position(&self) -> WebcSourcePosition {
-        self.end.end()
+        self.ast_node.end_position()
     }
 }
 
 impl std::fmt::Display for ExpressionErrorData {
     fn fmt(&self, f: &mut std::fmt::Formatter) -> std::fmt::Result {
-        write!(f, "{:?} at {}", self.error, self.start.start(),)
+        write!(f, "{:?} at {}", self.error, self.start_position(),)
     }
 }
 

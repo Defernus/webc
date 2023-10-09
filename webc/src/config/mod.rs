@@ -3,7 +3,10 @@ use envconfig::Envconfig;
 use crate::{WebcError, WebcResult};
 
 #[derive(Envconfig, Debug)]
-pub struct WebcConfig {}
+pub struct WebcConfig {
+    #[envconfig(from = "WEBC_MAIN_FILE")]
+    pub main_file: String,
+}
 
 impl WebcConfig {
     pub fn init() -> WebcResult<Self> {

@@ -15,6 +15,8 @@ mod lexer;
 pub enum WebcError {
     #[error("Failed to parse config: {0}")]
     ConfigParsing(String),
+    #[error("Failed to open file: {0}")]
+    FileOpenError(String),
     #[error("Failed to parse tokens: {0}")]
     LexerError(#[from] LexerError),
     #[error("Failed to parse AST: {0}")]
@@ -26,3 +28,9 @@ pub enum WebcError {
 }
 
 pub type WebcResult<T> = Result<T, WebcError>;
+
+impl From<std::io::Error> for WebcError {
+    fn from(e: std::io::Error) -> Self {
+        Self::FileOpenError(e.to_string())
+    }
+}

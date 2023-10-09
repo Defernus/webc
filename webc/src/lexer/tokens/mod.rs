@@ -2,7 +2,7 @@ use logos::Logos;
 use serde::Serialize;
 
 use crate::LexerError;
-pub use assign::*;
+pub use assign_operators::*;
 pub use binary_operator::*;
 use comment::{parse_multiline_comment, parse_singleline_comment};
 pub use compare_operator::*;
@@ -12,9 +12,9 @@ pub use punctuator::*;
 pub use type_keyword::*;
 pub use unary_operator::*;
 
-use super::source::{WebcSourceMeta, WebcSourcePosition};
+use super::source::position::WebcSourcePosition;
 
-mod assign;
+mod assign_operators;
 mod binary_operator;
 mod comment;
 mod compare_operator;
@@ -44,19 +44,19 @@ pub enum WebcToken {
     #[token("->", |_| Punctuator::RightArrow)]
     Punctuator(Punctuator),
 
-    #[token("=", |_| Assign::Assign)]
-    #[token("|=", |_| Assign::AssignBitOr)]
-    #[token("^=", |_| Assign::AssignBitXor)]
-    #[token("&=", |_| Assign::AssignBitAnd)]
-    #[token("<<=", |_| Assign::AssignShl)]
-    #[token(">>=", |_| Assign::AssignSar)]
-    #[token(">>>=", |_| Assign::AssignShr)]
-    #[token("+=", |_| Assign::AssignAdd)]
-    #[token("-=", |_| Assign::AssignSub)]
-    #[token("*=", |_| Assign::AssignMul)]
-    #[token("/=", |_| Assign::AssignDiv)]
-    #[token("%=", |_| Assign::AssignMod)]
-    Assign(Assign),
+    #[token("=", |_| AssignOperator::Assign)]
+    #[token("|=", |_| AssignOperator::AssignBitOr)]
+    #[token("^=", |_| AssignOperator::AssignBitXor)]
+    #[token("&=", |_| AssignOperator::AssignBitAnd)]
+    #[token("<<=", |_| AssignOperator::AssignShl)]
+    #[token(">>=", |_| AssignOperator::AssignSar)]
+    #[token(">>>=", |_| AssignOperator::AssignShr)]
+    #[token("+=", |_| AssignOperator::AssignAdd)]
+    #[token("-=", |_| AssignOperator::AssignSub)]
+    #[token("*=", |_| AssignOperator::AssignMul)]
+    #[token("/=", |_| AssignOperator::AssignDiv)]
+    #[token("%=", |_| AssignOperator::AssignMod)]
+    AssignOperator(AssignOperator),
 
     #[token("||", |_| BinaryOperator::Or)]
     #[token("&&", |_| BinaryOperator::And)]

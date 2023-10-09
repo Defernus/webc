@@ -1,7 +1,7 @@
 use serde::Serialize;
 
 #[derive(Debug, PartialEq, Eq, PartialOrd, Ord, Clone, Copy, Serialize)]
-pub enum Assign {
+pub enum AssignOperator {
     /// =
     Assign,
     /// |=
